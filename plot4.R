@@ -12,18 +12,28 @@ path <- "C:/Users/supriya/Documents/Rtutorial/Exploratory_Data_Analysis/ExData_P
 
 setwd(path)
 
-
-
-
-#plot2
-
+powerdat$Global_active_power <- as.numeric(powerdat$Global_active_power)
 powerdat$DateTime <- paste(powerdat$Date, powerdat$Time, sep = " ")
 powerdat$DateTime <-strptime(powerdat$DateTime, format="%d/%m/%Y %H:%M:%S")
 powerdat$DateTime <- as.POSIXct(powerdat$DateTime)
 
+powerdat$Sub_metering_1 <- as.numeric(powerdat$Sub_metering_1)
+powerdat$Sub_metering_2 <- as.numeric(powerdat$Sub_metering_2)
+powerdat$Sub_metering_3 <- as.numeric(powerdat$Sub_metering_3)
 
-png('plot2.png')
+
+par(mfcol=c(2,2))
+
 plot(powerdat$DateTime, powerdat$Global_active_power, xlab= "", ylab="Global Active Power (kilowatts)" , type="l")
-dev.off()
 
+plot(powerdat$DateTime, powerdat$Sub_metering_1,  xlab= "", ylab = "Energy sub metering" , type="l")
+lines(powerdat$DateTime, powerdat$Sub_metering_2, type="l", col="red")
+lines(powerdat$DateTime, powerdat$Sub_metering_3 , type="l", col="blue")
+
+plot(powerdat$DateTime, powerdat$Voltage, xlab= "datetime", ylab="Voltage" , type="l")
+
+plot(powerdat$DateTime, powerdat$Global_reactive_power, xlab= "datetime", ylab="Global_reactive_power" , type="l")
+
+
+dev.off()
 
